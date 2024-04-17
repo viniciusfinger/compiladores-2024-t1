@@ -1,0 +1,92 @@
+# Copyright (c) 2024 Rafael Guterres Jeffman
+# See the file COPYING for license details.
+---
+name: Avaliação
+on:
+  - push
+  - pull_request
+jobs:
+  lint_check:
+    name: Avaliação do pylint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: |
+          pip install pylint
+          pylint src
+  pep8_check:
+    name: Avaliação do flake8
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: |
+          pip install flake8
+          flake8 --ignore=E501 src
+  docs_check:
+    name: Verifica documentação mínima do cốdigo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: |
+          pip install pydocstyle
+          pydocstyle src
+  run_tests:
+    name: Executa os testes de avaliação
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: |
+          pip install behave
+          pip install -e .
+          behave
+      - name: Arquiva resultados
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: homework_evaluation
+          path: RESULT
+          retention-days: 1
+  report_result:
+    name: Resultados da avaliação
+    if: ${{ always() }}
+    needs: run_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: homework_evaluation
+      - run: sed -n -e '$ ! p' RESULT
+        name: Resultado
+  report_grade:
+    name: Previsão de nota final
+    if: ${{ always() }}
+    needs: run_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: homework_evaluation
+      - run: sed -n -e '$ p' RESULT
+        name: Previsão de Nota

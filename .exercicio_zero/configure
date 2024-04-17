@@ -1,0 +1,38 @@
+#!/bin/sh
+
+TOPDIR="$(dirname $(dirname $(realpath $0)))"
+EXZERODIR="${TOPDIR}/.exercicio_zero"
+
+. "${EXZERODIR}/project" 
+
+
+for file in "${TOPDIR}/pyproject.toml" "${TOPDIR}/README.md"
+do
+echo "Processing ${file}"
+sed -i "${file}" -e "
+    s/@HOMEWORK@/${HOMEWORK}/g
+    s/@USER@/${USERNAME}/g
+    s/@REPO@/${REPOSITORY}/g
+    s/@WORKCODE@/${WORKCODE:-T${WORKNUM}}/g
+    s/@WORKNUM@/${WORKNUM}/g
+    s/@MONTH@/${MONTH:-$(date +"%m")}/g
+    s/@YEAR@/${YEAR:-$(date +"%Y")}/g
+    s/@DISC@/${DISCIPLINA}/g
+    s/@CURSO@/${CURSO:-"Ciência da Computação"}/g
+    s/@UNIV@/${UNIVERSIDADE:-"Universidade LaSalle Canoas"}/g
+"
+done
+
+if [ -f "PROFESSOR.md" ]
+then
+    REMOVE="y"
+    read -p "Remover 'PROFESSOR.md'? [S/n]" -a REMOVE
+    if [ "${REMOVE}" == "S" ] || [ "${REMOVE}" == "s" ]
+    then
+        echo "Removendo arquivo 'PROFESSOR.md'."
+        git rm -f "${TOPDIR}/PROFESSOR.md"
+    else
+        echo "Não esqueça de remover o arquivo PROFESSOR.md antes de publicar o exercício."
+    fi
+fi
+

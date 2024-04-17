@@ -1,0 +1,52 @@
+{
+  "id": 614486,
+  "name": "Avaliação",
+  "target": "branch",
+  "source_type": "Repository",
+  "source": "rafasgj/exercicio-zero",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "~DEFAULT_BRANCH"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 1,
+        "dismiss_stale_reviews_on_push": true,
+        "require_code_owner_review": true,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          {
+            "context": "Executa os testes de avaliação"
+          },
+          {
+            "context": "Resultados da avaliação"
+          },
+          {
+            "context": "Previsão de nota final"
+          }
+        ]
+      }
+    }
+  ],
+  "bypass_actors": []
+}

@@ -1,0 +1,50 @@
+[project]
+name = "compiladores-2024-t1"
+description = "Trabalho T1 da disciplina compiladores, do curso de Ciência da Computação, da Universidade LaSalle Canoas."
+readme = "README.md"
+version = "1.04.2024"
+requires-python = ">=3.11"
+license = { file="COPYING" }
+
+classifiers = [
+  "Intended Audience :: Education",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
+
+dependencies = [
+   "black", "pylint", "flake8", "pydocstyle", "behave", "pytest"
+]
+
+[project.optional-dependencies]
+tox = [ "tox" ]
+
+[project.urls]
+homepage = "https://github.com/rafasgj/compiladores-2024-t1"
+repository = "https://github.com/rafasgj/compiladores-2024-t1"
+issues = "https://github.com/rafasgj/compiladores-2024-t1/issues"
+pull_requests = "https://github.com/rafasgj/compiladores-2024-t1/pulls"
+discussions = "https://github.com/rafasgj/compiladores-2024-t1/discussions"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+# line-length = 79
+target-version = ['py311', 'py312']
+include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+pythonpath = "."
+
+# pylint configuration
+[tool.pylint.MASTER]
+ignore-paths = '^src/ply/.*$'
+
+[tool.pylint.'BASIC']
+# max-line-length = 79
+max-attributes = 10
+good-names = [
+    "i", "j", "k", "x", "y"
+]
