@@ -101,7 +101,7 @@ Para esse experimento, será implementado um analisador léxico para um subconju
     * O tipo do token (de acordo com as tabelas anteriores)
     * A linha em que o token foi encontrado
     * E a representação do valor do token quando for adequado.
-6. No caso do processamento encontrar um erro léxiro, deve ser gerada uma exceção com o caracter que gerou o erro, o número da linha onde ocorreu o erro, e a posição do caracter na linha onde ocorreu o erro.
+6. No caso do processamento encontrar um erro léxico, deve ser gerada uma exceção com o caracter que gerou o erro, o número da linha onde ocorreu o erro, e a posição do caracter na linha onde ocorreu o erro.
 7. Serão fornecidos testes automatizados para a avaliação do trabalho. Os testes podem ser executadosu utilizando o utilitário `behave` ou o utilitário `tox`, que podem ser instalados em um ambiente virtual do Python.
 
 ## Entrega do trabalho
