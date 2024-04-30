@@ -5,6 +5,8 @@
 *.orig
 *.rej
 
+.venv
+
 # generated files
 /**/__pycache__/
 /build/
