@@ -1,6 +1,6 @@
 """Implementação do analisador léxico."""
 
-import ply.lex as lex
+from ply import lex
 from errors import LexerException
 
 reserved_keywords = {
@@ -109,54 +109,55 @@ t_OP_COLON = r':'
 t_OP_ATRIB = r':='
 t_OP_SUM = r'\+'
 
+
 def t_ignore_newline(token):
-    r'\n+'
+    r"""\n+"""
     token.lexer.lineno += token.value.count("\n")
 
 
 def t_id(t):
-    """[a-zA-Z_][a-zA-Z0-9_]*"""
+    r"""[a-zA-Z_][a-zA-Z0-9_]*"""
     t.type = reserved_keywords.get(t.value, 'ID')
     return t
 
 
 def t_lit_int(t):
-    """\d+"""
+    r"""\d+"""
     t.value = int(t.value)
     return t
 
 
 def t_lit_real(t):
-    """\d+\.\d+([eE][-+]?\d+)?"""
+    r"""\d+\.\d+([eE][-+]?\d+)?"""
     t.value = float(t.value)
     return t
 
 
 def t_lit_string(t):
-    """(\"[^\"]*\"|\'[^\']*\')"""
+    r"""(\"[^\"]*\"|\'[^\']*\')"""
     t.value = t.value[1:-1]
     return t
 
 
 def t_comment(t):
-    """\{.*?\}|\(\*(.|\n)*?\*\)"""
-    pass
+    r"""\{.*?\}|\(\*(.|\n)*?\*\)"""
 
 
 def t_newline(t):
-    r'\n+'
+    r"""\n+"""
     t.lexer.lineno += len(t.value)
 
 
 def find_column(input_text, token_position):
     """Encontra a coluna do token com erro."""
     line_start = input_text.rfind('\n', 0, token_position) + 1
-    return (token_position - line_start)
+    return token_position - line_start
 
 
 def t_error(t):
     """Joga exception do analisador léxico."""
     raise LexerException(t.value[0], t.lexer.lineno, find_column(t.lexer.lexdata, t.lexpos))
+
 
 def lexer():
     """Cria o objeto do analisador léxico."""
