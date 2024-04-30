@@ -143,7 +143,6 @@ def t_comment(t):
     r"""\{.*?\}|\(\*(.|\n)*?\*\)"""
 
 
-
 def t_newline(t):
     r"""\n+"""
     t.lexer.lineno += len(t.value)
