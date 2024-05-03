@@ -97,7 +97,7 @@ tokens = [
     'COMMENT'
 ]
 
-# pylint: disable=invalid_name
+# pylint: disable=invalid-name
 t_ignore = ' \t'
 t_OP_OPAR = r'\('
 t_OP_CPAR = r'\)'
@@ -109,7 +109,7 @@ t_OP_PERIOD = r'\.'
 t_OP_COLON = r':'
 t_OP_ATRIB = r':='
 t_OP_SUM = r'\+'
-# pylint: enable=invalid_name
+# pylint: enable=invalid-name
 
 def t_ignore_newline(token):
     r"""\n+"""
