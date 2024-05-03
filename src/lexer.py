@@ -97,6 +97,7 @@ tokens = [
     'COMMENT'
 ]
 
+# pylint: disable=invalid-name
 t_ignore = ' \t'
 t_OP_OPAR = r'\('
 t_OP_CPAR = r'\)'
@@ -108,7 +109,7 @@ t_OP_PERIOD = r'\.'
 t_OP_COLON = r':'
 t_OP_ATRIB = r':='
 t_OP_SUM = r'\+'
-
+# pylint: enable=invalid-name
 
 def t_ignore_newline(token):
     r"""\n+"""
@@ -139,7 +140,7 @@ def t_lit_string(t):
     return t
 
 
-def t_comment(t):
+def t_comment(_t):
     r"""\{.*?\}|\(\*(.|\n)*?\*\)"""
 
 
